@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.economiz.shoplist.api.dto.ProdutoDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,10 +24,16 @@ public class Produto {
 		this.nome = produtoDto.getNome();
 		this.precos = new ArrayList<>();
 	}
+	
+	public Produto() {
+		this.nome = "";
+		this.precos = new ArrayList<>();
+	}
 
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private Long id;
 	
 	@Column
@@ -34,4 +41,8 @@ public class Produto {
 	
 	@OneToMany
 	private List<Preco> precos = new ArrayList<>();
+	
+	public void adicionarPreco(Preco preco) {
+		this.precos.add(preco);
+	}
 }
