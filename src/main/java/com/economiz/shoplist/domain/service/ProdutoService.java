@@ -25,4 +25,8 @@ public class ProdutoService {
 	public Produto buscarPorId(Long id) {
 		return produtos.findById(id).orElseThrow();
 	}
+
+	public Produto buscarPorNome(String nome) {
+		return produtos.findByNome(nome);
+	}
 }
