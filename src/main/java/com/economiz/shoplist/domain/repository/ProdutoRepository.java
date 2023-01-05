@@ -8,4 +8,5 @@ import com.economiz.shoplist.domain.model.Produto;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 	
+	Produto findByNome(String nome);
 }
