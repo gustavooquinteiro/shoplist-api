@@ -2,6 +2,7 @@ package com.economiz.shoplist.api.controller;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +35,8 @@ public class MercadoController {
 	@PostMapping("/{idMercado}")
 	public Mercado atualizarMercado(@PathVariable Long idMercado, @RequestBody Mercado mercado) {
 		Mercado mercadoASerAtualizado = mercadoService.buscarPorId(idMercado);
-		//TODO 
-		mercadoService.salvarMercado(mercadoASerAtualizado);
+		BeanUtils.copyProperties(mercado, mercadoASerAtualizado, "id");
+		mercadoASerAtualizado = mercadoService.salvarMercado(mercadoASerAtualizado);
 		return mercadoASerAtualizado; 
 	}
 	
