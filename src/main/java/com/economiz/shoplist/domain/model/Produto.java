@@ -3,15 +3,16 @@ package com.economiz.shoplist.domain.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 import com.economiz.shoplist.api.dto.ProdutoDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -44,5 +45,20 @@ public class Produto {
 	
 	public void adicionarPreco(Preco preco) {
 		this.precos.add(preco);
+		this.ordenarPrecos();
 	}
+	
+	public void ordenarPrecos() {
+		this.getPrecos().stream().min((o1, o2) -> o1.compareTo(o2)).get();
+	}
+	
+	public Double retornaValorDoMenorPreco() {
+		return this.retornaMenorPreco().getValor();
+	}
+	
+	public Preco retornaMenorPreco() {
+		this.ordenarPrecos();
+		return this.precos.get(0);
+	}
+	
 }
