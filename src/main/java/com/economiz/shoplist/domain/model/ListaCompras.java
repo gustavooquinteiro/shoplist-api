@@ -2,6 +2,7 @@ package com.economiz.shoplist.domain.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.economiz.shoplist.api.dto.ItemResponseDTO;
 import com.economiz.shoplist.api.dto.ListaComprasResponseDTO;
@@ -34,10 +35,9 @@ public class ListaCompras {
 	
 	public Double getValorTotal() {
 		this.setItens(this.montarLista());
-		Double total = 0.0;
-		for(Item item: itens)
-			total += item.getMenorValor() * item.getQuantidade();
-		return total;
+		return itens.stream()
+				.mapToDouble(item -> item.getProduto().retornaValorDoMenorPreco() * item.getQuantidade())
+				.sum();
 	}
 
 	public void adicionarItem(Item item) {
@@ -45,11 +45,16 @@ public class ListaCompras {
 	}
 
 	public ListaComprasResponseDTO toResponseDTO() {
-		List<ItemResponseDTO> itensResponse = new ArrayList<>();
-		for (Item item: itens) {
-			itensResponse.add(item.toItemResponse());
-		}
+		List<ItemResponseDTO> itensResponse = itens.stream()
+				.map(Item::toItemResponse)
+				.collect(Collectors.toList());
 		return new ListaComprasResponseDTO(itensResponse, getValorTotal());
+	}
+
+	public void agruparPorMercado() {
+		this.itens.stream().collect(
+				Collectors.groupingBy(
+						e -> e.getProduto().retornaMenorPreco().getMercado().getNome()));
 	}
 	
 }
