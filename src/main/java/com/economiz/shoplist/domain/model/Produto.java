@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 
 import com.economiz.shoplist.api.dto.ProdutoDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,6 +39,7 @@ public class Produto {
 	private Long id;
 	
 	@Column
+	@NotBlank
 	private String nome;
 	
 	@OneToMany
