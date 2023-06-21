@@ -1,6 +1,7 @@
 package com.economiz.shoplist.domain.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -51,7 +52,7 @@ public class Produto {
 	}
 	
 	public void ordenarPrecos() {
-		this.getPrecos().stream().min((o1, o2) -> o1.compareTo(o2)).get();
+		Collections.sort(this.precos);
 	}
 	
 	public Double retornaValorDoMenorPreco() {
