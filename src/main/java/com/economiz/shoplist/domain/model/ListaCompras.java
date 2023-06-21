@@ -29,15 +29,9 @@ public class ListaCompras {
 	@OneToMany
 	private List<Item> itens = new ArrayList<>();
 	
-	public List<Item> montarLista(){
-		this.itens.stream().forEach(Item::escolherMenorValor);
-		return this.itens;
-	}
-	
 	public Double getValorTotal() {
-		this.setItens(this.montarLista());
 		return itens.stream()
-				.mapToDouble(item -> item.getProduto().retornaValorDoMenorPreco() * item.getQuantidade())
+				.mapToDouble(Item::retornaPrecoTotal)
 				.sum();
 	}
 
