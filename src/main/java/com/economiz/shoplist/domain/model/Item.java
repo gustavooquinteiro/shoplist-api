@@ -34,14 +34,16 @@ public class Item {
 	public Item() {}
 
 	public ItemResponseDTO toItemResponse() {
-		this.escolherMenorValor();
+		produto.ordenarPrecos();
 		return new ItemResponseDTO(produto.getNome(), 
 									quantidade, 
 									produto.retornaValorDoMenorPreco(), 
 									produto.retornaMenorPreco().getMercado());
 	}
 	
-	public void escolherMenorValor() {
-		this.produto.ordenarPrecos();
+	
+	public double retornaPrecoTotal() {	
+		return produto.retornaValorDoMenorPreco() * this.quantidade;
 	}
+	
 }
